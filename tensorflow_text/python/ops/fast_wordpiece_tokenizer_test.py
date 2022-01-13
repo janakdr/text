@@ -545,6 +545,13 @@ class FastWordpieceOpAdditionalTest(test_base.DatasetTestBase,
 
     self.assertAllEqual(tokenizer.tokenize(text_inputs), expected_outputs)
 
+  def testTokenizerBuiltFromModelInTensor(self, text_inputs, expected_outputs):
+    model_buffer = _LoadTestModelBuffer()
+    model_buffer = tf.constant(list(model_buffer), dtype=tf.uint8)
+    tokenizer = FastWordpieceTokenizer(model_buffer=model_buffer)
+
+    self.assertAllEqual(tokenizer.tokenize(text_inputs), expected_outputs)
+
   def testTokenizerBuiltInsideTfFunctionFromConfig(self, text_inputs,
                                                    expected_outputs):
 
